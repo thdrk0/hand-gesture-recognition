@@ -1,0 +1,22 @@
+# time_ms,label,confidence,hand_count
+0,one,0.95,1
+300,one,0.95,1
+600,one,0.95,1
+900,one,0.95,1
+# A brief wrong reading must not emit a new event.
+1000,five,0.95,1
+1100,one,0.95,1
+# Stable absence rearms the same digit.
+1200,no_hand,0,0
+1500,no_hand,0,0
+1800,no_hand,0,0
+1900,one,0.95,1
+2200,one,0.95,1
+2500,one,0.95,1
+2600,four,0.95,1
+2900,four,0.95,1
+3200,four,0.95,1
+3300,five,0.95,1
+3600,five,0.95,1
+3900,five,0.95,1
+

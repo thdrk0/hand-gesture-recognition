@@ -1,0 +1,43 @@
+menu "Hand gesture application"
+    choice GESTURE_BOARD
+        prompt "Camera board"
+        default GESTURE_BOARD_S3_EYE
+        config GESTURE_BOARD_S3_EYE
+            bool "ESP32-S3-EYE (OV2640)"
+        config GESTURE_BOARD_XIAO_SENSE
+            bool "Seeed XIAO ESP32S3 Sense (DVP camera)"
+    endchoice
+
+    config GESTURE_CAMERA_VFLIP
+        bool "Flip camera vertically"
+        default y if GESTURE_BOARD_S3_EYE
+        default n
+    config GESTURE_CAMERA_HMIRROR
+        bool "Mirror camera horizontally"
+        default n
+    config GESTURE_SCORE_PERCENT
+        int "Minimum gesture confidence (%)"
+        range 50 99
+        default 75
+    config GESTURE_DETECT_PERCENT
+        int "Minimum hand detection confidence (%)"
+        range 25 99
+        default 50
+    config GESTURE_HOLD_MS
+        int "Gesture and release hold time (ms)"
+        range 200 3000
+        default 600
+    config GESTURE_MIN_SAMPLES
+        int "Minimum consecutive samples"
+        range 2 20
+        default 3
+    config GESTURE_MAX_GAP_MS
+        int "Restart stabilization after this sampling gap (ms)"
+        range 500 10000
+        default 1500
+    config GESTURE_FRAME_DELAY_MS
+        int "Delay between inference cycles (ms)"
+        range 10 1000
+        default 30
+endmenu
+

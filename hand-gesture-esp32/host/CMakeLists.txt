@@ -1,0 +1,26 @@
+cmake_minimum_required(VERSION 3.16)
+project(hand_gesture_host LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+option(GESTURE_SANITIZERS "Enable address and undefined-behaviour sanitizers" OFF)
+add_library(gesture_core ../components/gesture_core/gesture_core.cpp)
+target_include_directories(gesture_core PUBLIC ../components/gesture_core/include)
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    target_compile_options(gesture_core PUBLIC -Wall -Wextra -Wpedantic -Werror)
+    if(GESTURE_SANITIZERS)
+        target_compile_options(gesture_core PUBLIC -fsanitize=address,undefined -fno-omit-frame-pointer)
+        target_link_options(gesture_core PUBLIC -fsanitize=address,undefined)
+    endif()
+endif()
+add_executable(gesture_replay replay.cpp)
+target_link_libraries(gesture_replay PRIVATE gesture_core)
+add_executable(gesture_tests test_core.cpp)
+target_link_libraries(gesture_tests PRIVATE gesture_core)
+enable_testing()
+add_test(NAME gesture_core COMMAND gesture_tests)
+add_test(NAME replay_fixture COMMAND ${CMAKE_COMMAND}
+    -DREPLAY=$<TARGET_FILE:gesture_replay>
+    -DINPUT=${CMAKE_CURRENT_SOURCE_DIR}/sample.csv
+    -P ${CMAKE_CURRENT_SOURCE_DIR}/check_replay.cmake)
+

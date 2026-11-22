@@ -1,0 +1,11 @@
+build/
+build-*/
+build-host/
+managed_components/
+sdkconfig
+sdkconfig.old
+.verification/
+sdkconfig.*.old
+__pycache__/
+*.pyc
+

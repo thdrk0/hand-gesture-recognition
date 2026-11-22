@@ -1,0 +1,14 @@
+# This repository contains only the hand gesture project.
+/*
+!/.gitignore
+!/README.md
+!/docs/
+!/hand-gesture/
+!/hand-gesture-esp32/
+
+# Generated locally by tools and editors.
+**/.vscode/
+**/.idea/
+**/.DS_Store
+**/Thumbs.db
+*:Zone.Identifier
